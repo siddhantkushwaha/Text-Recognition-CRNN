@@ -1,7 +1,7 @@
 import os
 import cv2
 
-from param import letters
+from param import letters, max_text_len
 
 
 def get_image_paths(data_path):
@@ -17,7 +17,7 @@ def text_to_labels(text):
         i = letters.get(x, -1)
         if i > -1:
             labels.append(i)
-    return labels
+    return labels[:max_text_len]
 
 
 def load_annotation(image_path):

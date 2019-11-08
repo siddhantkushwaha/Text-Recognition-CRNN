@@ -14,7 +14,7 @@ def main():
     ada = Adadelta()
     crnn.model.compile(loss=lambda y_true, y_pred: y_pred, optimizer=ada)
 
-    batch_size = 64
+    batch_size = 128
     train_gen = DataGenerator(data_path='../../FUNSD_TEXT_RECOGNITION/train_data/', batch_size=batch_size)
     val_gen = DataGenerator(data_path='../../FUNSD_TEXT_RECOGNITION/val_data/', batch_size=batch_size)
 
@@ -24,7 +24,7 @@ def main():
                                  mode='min', period=1, save_weights_only=True)
 
     # load previous checkpoints
-    crnn.model.load_weights('models/model-14--6.839.h5')
+    # crnn.model.load_weights('models/model-14--6.839.h5')
 
     crnn.model.fit_generator(
         generator=train_gen,
