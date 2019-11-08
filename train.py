@@ -19,12 +19,12 @@ def main():
     val_gen = DataGenerator(data_path='../../FUNSD_TEXT_RECOGNITION/val_data/', batch_size=batch_size)
 
     os.system('mkdir -p models')
-    early_stop = EarlyStopping(monitor='val_loss', min_delta=0.001, patience=4, mode='min', verbose=1)
+    early_stop = EarlyStopping(monitor='loss', min_delta=0.001, patience=4, mode='min', verbose=1)
     checkpoint = ModelCheckpoint(filepath='models/model-{epoch:02d}--{val_loss:.3f}.h5', monitor='loss', verbose=1,
                                  mode='min', period=1, save_weights_only=True)
 
-    with open('models/model.json', 'w') as f:
-        f.write(crnn.model.to_json())
+    # load previous checkpoints
+    crnn.model.load_weights('models/model-14--6.839.h5')
 
     crnn.model.fit_generator(
         generator=train_gen,
