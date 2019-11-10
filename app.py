@@ -18,8 +18,8 @@ def index():
 
 @app.route('/process', methods=['POST'])
 def process():
-    bufs = request.files.getlist('images')
-    images = [np.array(Image.open(buf).convert('RGB')) for buf in bufs]
+    image_buffers = request.files.getlist('images')
+    images = [np.array(Image.open(buf).convert('RGB')) for buf in image_buffers]
     global graph
     with graph.as_default():
         outs = process_image(model.model, images)
@@ -30,4 +30,4 @@ if __name__ == '__main__':
     logging.getLogger().setLevel(logging.ERROR)
     model = load_model(model_path='models/model-60--8.407.h5')
     graph = tf.get_default_graph()
-    app.run(host='0.0.0.0', port=8778)
+    app.run(host='0.0.0.0', port=8779)
