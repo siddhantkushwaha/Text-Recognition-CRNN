@@ -18,7 +18,7 @@ def eval_image(img_fn, crnn):
     img = cv2.imread(img_fn)
 
     true_text = load_annotation(img_fn)
-    ts_text = ts.image_to_string(img_fn, config=("-l eng --oem 1 --psm 8"))
+    ts_text = ts.image_to_string(img, config=("-l eng --oem 1 --psm 8"))
     crnn_text = process_image(crnn.model, [img])[0]
 
     return true_text, (ts_text, similarity_score(true_text, ts_text)), (
