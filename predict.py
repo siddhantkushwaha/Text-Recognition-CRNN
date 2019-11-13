@@ -1,12 +1,10 @@
-import os
 import itertools
-import logging
 
 import numpy as np
 import cv2
 
 from model import CRNN
-from utils import transform, load_annotation
+from utils import transform
 from param import CHAR_VECTOR
 
 
@@ -38,19 +36,3 @@ def process_image(model, images):
     predictions = model.predict(np.array(processed_images))
     predictions = [decode_label(p) for p in predictions]
     return predictions
-
-
-def main():
-    crnn = load_model('models/model-60--8.407.h5')
-    root = '../FUNSD_TEXT_RECOGNITION/test_data'
-    for i in os.listdir(root):
-        if not i.endswith('.png'):
-            continue
-        img_fn = os.path.join(root, i)
-        img = cv2.imread(img_fn)
-        print(process_image(crnn.model, [img])[0], load_annotation(img_fn))
-
-
-if __name__ == '__main__':
-    logging.getLogger().setLevel(logging.ERROR)
-    main()
