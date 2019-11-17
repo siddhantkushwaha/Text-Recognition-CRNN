@@ -5,7 +5,7 @@ import cv2
 
 from model import CRNN
 from utils import transform
-from param import CHAR_VECTOR
+from param import CHARSET
 
 
 def load_model(model_path):
@@ -19,8 +19,8 @@ def decode_label(out):
     out_best = [k for k, g in itertools.groupby(out_best)]
     outstr = ''
     for i in out_best:
-        if i < len(CHAR_VECTOR):
-            outstr += CHAR_VECTOR[i]
+        if i < len(CHARSET):
+            outstr += CHARSET[i]
     return outstr
 
 
