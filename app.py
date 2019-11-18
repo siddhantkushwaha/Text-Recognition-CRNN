@@ -42,7 +42,7 @@ if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
     logging.getLogger().setLevel(logging.ERROR)
-    model = load_model(model_path='models/model-60--8.407.h5')
+    model = load_model(model_path='models/model_new_best.h5')
     graph = tf.get_default_graph()
 
     app.run(host='127.0.0.1', port=5002)
