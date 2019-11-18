@@ -1,3 +1,5 @@
+import time
+import random
 import logging
 
 import cv2
@@ -11,6 +13,8 @@ from utils import load_annotation, get_image_paths
 # %%
 
 def similarity_score(a, b):
+    a = a.lower()
+    b = b.lower()
     return SequenceMatcher(None, a, b).ratio()
 
 
@@ -26,10 +30,12 @@ def eval_image(img_fn, crnn):
 
 
 def main():
-    crnn = load_model('models/model-60--8.407.h5')
+    crnn = load_model('models/model_new_best.h5')
     root = '../../FUNSD_TEXT_RECOGNITION/test_data'
 
     images = get_image_paths(root)
+    random.shuffle(images)
+
     ts_score = 0
     crnn_score = 0
     for image in images:
@@ -41,6 +47,9 @@ def main():
         print(res)
         print(ts_score, crnn_score)
         print()
+
+        time.sleep(2)
+        # break
 
 
 # %%

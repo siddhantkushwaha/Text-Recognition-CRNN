@@ -16,25 +16,26 @@ def main():
 
     batch_size = 128
     train_gen = DataGenerator(data_path='../../FUNSD_TEXT_RECOGNITION/train_data/', batch_size=batch_size)
-    val_gen = DataGenerator(data_path='../../FUNSD_TEXT_RECOGNITION/val_data/', batch_size=batch_size)
+    # val_gen = DataGenerator(data_path='../../FUNSD_TEXT_RECOGNITION/val_data/', batch_size=batch_size)
 
     os.system('mkdir -p models')
-    early_stop = EarlyStopping(monitor='loss', min_delta=0.001, patience=4, mode='min', verbose=1)
-    checkpoint = ModelCheckpoint(filepath='models/model_new-{epoch:02d}--{val_loss:.3f}.h5', monitor='loss', verbose=1,
+    # early_stop = EarlyStopping(monitor='loss', min_delta=0.001, patience=4, mode='min', verbose=1)
+    checkpoint = ModelCheckpoint(filepath='models/model_new_2-{epoch:02d}--{loss:.3f}.h5', monitor='loss', verbose=1,
                                  mode='min', period=1, save_weights_only=True)
 
     # load previous checkpoints
-    # crnn.model.load_weights('models/model-14--6.839.h5')
+    crnn.model.load_weights('models/model_new_best.h5')
 
     crnn.model.fit_generator(
         generator=train_gen,
         steps_per_epoch=len(train_gen.image_paths) // batch_size,
         epochs=200,
 
-        validation_data=val_gen,
-        validation_steps=len(val_gen.image_paths) // batch_size,
+        # validation_data=val_gen,
+        # validation_steps=len(val_gen.image_paths) // batch_size,
 
-        callbacks=[early_stop, checkpoint],
+        # callbacks=[checkpoint, early_stop],
+        callbacks=[checkpoint],
 
         workers=16,
         use_multiprocessing=True,
