@@ -9,3 +9,4 @@ img_w = 128
 img_h = 64
 
 DOWNSAMPLING_FACTOR = 4
+
