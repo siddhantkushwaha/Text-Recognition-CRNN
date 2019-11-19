@@ -31,6 +31,7 @@ class DataGenerator(Sequence):
                 label_lens.append(label_len)
 
             except Exception as e:
+                print(image_path)
                 print(str(e))
 
         input_length = np.ones((len(images), 1)) * ((self.img_w // 4) - 2)

@@ -46,7 +46,7 @@ def eval_image(img_fn, crnn):
 
 def main():
     crnn = load_model('models/model_new_best.h5')
-    root = '../../FUNSD_TEXT_RECOGNITION/test_data'
+    root = '../../ic19_rec/test_data'
 
     images = get_image_paths(root)
     random.shuffle(images)
@@ -65,7 +65,7 @@ def main():
         print(ts_score, crnn_score, corrected_score)
         print()
 
-        # time.sleep(2)
+        time.sleep(2)
         # break
 
 

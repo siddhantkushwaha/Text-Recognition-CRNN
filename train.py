@@ -14,22 +14,22 @@ def main():
     ada = Adadelta()
     crnn.model.compile(loss=lambda y_true, y_pred: y_pred, optimizer=ada)
 
-    batch_size = 128
-    train_gen = DataGenerator(data_path='../../FUNSD_TEXT_RECOGNITION/train_data/', batch_size=batch_size)
-    # val_gen = DataGenerator(data_path='../../FUNSD_TEXT_RECOGNITION/val_data/', batch_size=batch_size)
+    batch_size = 64
+    train_gen = DataGenerator(data_path='../../ic19_rec/train_data', batch_size=batch_size)
+    # val_gen = DataGenerator(data_path='../../ic19_rec/test_data/', batch_size=batch_size)
 
     os.system('mkdir -p models')
-    # early_stop = EarlyStopping(monitor='loss', min_delta=0.001, patience=4, mode='min', verbose=1)
-    checkpoint = ModelCheckpoint(filepath='models/model_new_2-{epoch:02d}--{loss:.3f}.h5', monitor='loss', verbose=1,
+    early_stop = EarlyStopping(monitor='loss', min_delta=0.001, patience=4, mode='min', verbose=1)
+    checkpoint = ModelCheckpoint(filepath='models/model_ic19_{epoch:02d}_{loss:.3f}.h5', monitor='loss', verbose=1,
                                  mode='min', period=1, save_weights_only=True)
 
     # load previous checkpoints
-    crnn.model.load_weights('models/model_new_best.h5')
+    # crnn.model.load_weights('models/model_new_best.h5')
 
     crnn.model.fit_generator(
         generator=train_gen,
         steps_per_epoch=len(train_gen.image_paths) // batch_size,
-        epochs=200,
+        epochs=1000,
 
         # validation_data=val_gen,
         # validation_steps=len(val_gen.image_paths) // batch_size,
