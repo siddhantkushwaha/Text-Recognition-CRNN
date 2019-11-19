@@ -3,7 +3,7 @@ import cv2
 
 from keras.utils import Sequence
 
-from param import img_w, img_h, max_text_len
+from param import img_w, img_h, max_text_len, DOWNSAMPLING_FACTOR
 from utils import load_annotation, text_to_labels, transform, get_image_paths
 
 
@@ -34,7 +34,7 @@ class DataGenerator(Sequence):
                 print(image_path)
                 print(str(e))
 
-        input_length = np.ones((len(images), 1)) * ((self.img_w // 4) - 2)
+        input_length = np.ones((len(images), 1)) * ((self.img_w // DOWNSAMPLING_FACTOR) - 2)
         return [np.array(images), np.array(labels), input_length, np.array(label_lens)], [np.zeros([len(images)])]
 
     def __len__(self):
