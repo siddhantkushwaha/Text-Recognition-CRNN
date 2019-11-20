@@ -20,7 +20,7 @@ def main():
 
     os.system('mkdir -p models')
     early_stop = EarlyStopping(monitor='loss', min_delta=0.001, patience=4, mode='min', verbose=1)
-    checkpoint = ModelCheckpoint(filepath='models/model_ic19_{epoch:02d}_{loss:.3f}.h5', monitor='loss', verbose=1,
+    checkpoint = ModelCheckpoint(filepath='models/model_{epoch:02d}_{loss:.3f}.h5', monitor='loss', verbose=1,
                                  mode='min', period=1, save_weights_only=True)
 
     # load previous checkpoints
