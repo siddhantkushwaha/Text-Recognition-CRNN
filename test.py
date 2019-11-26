@@ -10,6 +10,9 @@ from predict import load_model, process_image
 from utils import load_annotation, get_image_paths
 import spell
 
+MODEL_NAME = 'model_new_best.h5'
+DIR_NAME = '../../FUNSD_TEXT_RECOGNITION'
+
 
 # %%
 
@@ -45,8 +48,8 @@ def eval_image(img_fn, crnn):
 
 
 def main():
-    crnn = load_model('models/model_new_best.h5')
-    root = '../../ic19_rec/test_data'
+    crnn = load_model(f'models/{MODEL_NAME}')
+    root = f'../../{DIR_NAME}//test_data'
 
     images = get_image_paths(root)
     random.shuffle(images)

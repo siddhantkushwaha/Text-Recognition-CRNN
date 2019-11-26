@@ -7,6 +7,8 @@ from keras.optimizers import Adadelta
 from data_generator import DataGenerator
 from model import CRNN
 
+DIR_NAME = '../../FUNSD_TEXT_RECOGNITION'
+
 
 def main():
     crnn = CRNN(is_train=True)
@@ -15,8 +17,8 @@ def main():
     crnn.model.compile(loss=lambda y_true, y_pred: y_pred, optimizer=ada)
 
     batch_size = 64
-    train_gen = DataGenerator(data_path='../../ic19_rec/train_data', batch_size=batch_size)
-    # val_gen = DataGenerator(data_path='../../ic19_rec/test_data/', batch_size=batch_size)
+    train_gen = DataGenerator(data_path=f'../../{DIR_NAME}/train_data', batch_size=batch_size)
+    # val_gen = DataGenerator(data_path=f'../../{DIR_NAME}/test_data/', batch_size=batch_size)
 
     os.system('mkdir -p models')
     early_stop = EarlyStopping(monitor='loss', min_delta=0.001, patience=4, mode='min', verbose=1)
@@ -34,8 +36,8 @@ def main():
         # validation_data=val_gen,
         # validation_steps=len(val_gen.image_paths) // batch_size,
 
-        # callbacks=[checkpoint, early_stop],
-        callbacks=[checkpoint],
+        callbacks=[checkpoint, early_stop],
+        # callbacks=[checkpoint],
 
         workers=16,
         use_multiprocessing=True,
