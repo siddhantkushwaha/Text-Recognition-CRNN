@@ -7,7 +7,7 @@ from keras.optimizers import Adadelta
 from data_generator import DataGenerator
 from model import CRNN
 
-DIR_NAME = '../../FUNSD_TEXT_RECOGNITION'
+DIR_NAME = 'FUNSD_TEXT_RECOGNITION'
 
 
 def main():

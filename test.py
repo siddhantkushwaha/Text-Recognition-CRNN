@@ -11,7 +11,7 @@ from utils import load_annotation, get_image_paths
 import spell
 
 MODEL_NAME = 'model_new_best.h5'
-DIR_NAME = '../../FUNSD_TEXT_RECOGNITION'
+DIR_NAME = 'FUNSD_TEXT_RECOGNITION'
 
 
 # %%
