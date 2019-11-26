@@ -1,7 +1,7 @@
 import os
 import cv2
 
-from param import CHARSET, letters, max_text_len
+from param import CHARSET, letters
 
 
 def get_image_paths(data_path):
@@ -21,8 +21,7 @@ def text_to_labels(text):
         if i > -1:
             labels.append(i)
 
-    # slice to max text length
-    return labels[:max_text_len]
+    return labels
 
 
 def label_to_text(label):

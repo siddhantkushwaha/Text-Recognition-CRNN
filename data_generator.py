@@ -24,7 +24,7 @@ class DataGenerator(Sequence):
         for image_path in batch_image_paths:
             try:
                 img, label, label_len = self.process(image_path)
-                if label_len == 0:
+                if label_len == 0 or label_len > max_text_len:
                     continue
                 images.append(np.reshape(img, (img_h, img_w, 1)))
                 labels.append(label + [-1] * (max_text_len - label_len))
