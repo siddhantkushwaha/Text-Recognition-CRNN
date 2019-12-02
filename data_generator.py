@@ -15,6 +15,8 @@ class DataGenerator(Sequence):
         self.batch_size = batch_size
         self.image_paths = get_image_paths(data_path)
 
+        np.random.shuffle(self.image_paths)
+
     def __getitem__(self, index):
         batch_image_paths = self.image_paths[index * self.batch_size:(index + 1) * self.batch_size]
 
@@ -24,10 +26,11 @@ class DataGenerator(Sequence):
         for image_path in batch_image_paths:
             try:
                 img, label, label_len = self.process(image_path)
-                if label_len == 0 or label_len > max_text_len:
+                if not 0 < label_len <= max_text_len:
                     continue
                 images.append(np.reshape(img, (img_h, img_w, 1)))
-                labels.append(label + [-1] * (max_text_len - label_len))
+                resized_label = label + [-1] * (max_text_len - label_len)
+                labels.append(resized_label)
                 label_lens.append(label_len)
 
             except Exception as e:
@@ -47,7 +50,7 @@ class DataGenerator(Sequence):
         img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
         img = transform(img, img_w=img_w, img_h=img_h)
         img = img.astype(np.float32)
-        img = (img / 127.0) - 1.0
+        img = (img / 255.0) * 2.0 - 1.0
 
         text = load_annotation(img_path)
         labels = text_to_labels(text)

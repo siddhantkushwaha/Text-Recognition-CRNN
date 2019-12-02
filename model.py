@@ -11,7 +11,8 @@ def ctc_lambda_func(args):
     # the 2 is critical here since the first couple outputs of the RNN
     # tend to be garbage:
     y_pred = y_pred[:, 2:, :]
-    return K.ctc_batch_cost(labels, y_pred, input_length, label_length)
+    loss = K.ctc_batch_cost(labels, y_pred, input_length, label_length)
+    return loss
 
 
 class CRNN:
@@ -84,7 +85,7 @@ class CRNN:
         inner = Dense(num_classes, kernel_initializer='he_normal', name='dense2')(lstm2_merged)  # (None, 32, 63)
         y_pred = Activation('softmax', name='softmax')(inner)
 
-        labels = Input(name='the_labels', shape=[max_text_len], dtype='float32')  # (None ,8)
+        labels = Input(name='the_labels', shape=[max_text_len], dtype='float32')  # (None ,length)
         input_length = Input(name='input_length', shape=[1], dtype='int64')  # (None, 1)
         label_length = Input(name='label_length', shape=[1], dtype='int64')  # (None, 1)
 

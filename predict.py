@@ -30,7 +30,7 @@ def process_image(model, images):
         processed_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         processed_image = transform(processed_image, img_w=128, img_h=64)
         processed_image = np.reshape(processed_image, (64, 128, 1))
-        processed_image = (processed_image / 127.0) - 1.0
+        processed_image = (processed_image / 255.0) * 2.0 - 1.0
         processed_images.append(processed_image)
 
     predictions = model.predict(np.array(processed_images))
